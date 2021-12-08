@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
@@ -9,7 +10,8 @@ int main() {
   cout << "Welcome to Zuul" << endl;
   cout << "In this version, you are urgently needed at your computer for a meeting." << endl;
   cout << "You need to find and get your peripherals before you can go to your computer." << endl; //Keyboard, mouse, headphones, webcam, mousepad, wireless adapters
-  cout << "Go through your house to find your items. Your commands are: go, get, drop, inventory, quit, and help" << endl
+  cout << "Go through your house to find your items." << endl; 
+  cout << "Your commands are: go, get, drop, inventory, quit, and help" << endl;
 
   while (playing == true) {
     cout << "You are currently in the ";
@@ -28,7 +30,16 @@ int main() {
     }
     else if (strcmp(commandInput, "Quit") == 0 || strcmp(commandInput, "quit") == 0) {
       playing = false;
-      cout << "Quiting";
+      cout << "Quitting Zuul.";
     }
-    else if
+    else if (strcmp(commandInput, "Help") == 0 || strcmp(commandInput, "help") == 0) {
+      cout << "The available commands are: go, get, drop, inventory, quit, and help." << endl;
+      cout << "Map: " << endl; //placeholder for link to map
+    }
+    else {
+      cout << "Invalid command, try again" << endl;
+      playing = true;
+    }
   }
+}
+

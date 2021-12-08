@@ -1,0 +1,11 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  //bool playing = true;
+
+  cout << "Welcome to Zuul" << endl;
+  cout << "In this version, you are urgently needed at your computer for a meeting." << endl;
+  cout << "You need to find and get your peripherals before you can go to your computer." << endl;
+}
