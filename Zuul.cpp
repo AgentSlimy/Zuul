@@ -1,5 +1,12 @@
+/*
+Author: Nathan Zou
+Map: https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-template-library-stl/
+     https://www.cplusplus.com/reference/map/map/map/
+*/
+
 #include <iostream>
 #include <cstring>
+#include <map>
 
 using namespace std;
 
