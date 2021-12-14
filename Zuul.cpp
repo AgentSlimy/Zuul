@@ -8,11 +8,28 @@ Map: https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-tem
 #include <cstring>
 #include <map>
 
+#include "room.h"
+#include "item.h"
+
 using namespace std;
+
+void initializeRooms(vector<Room*>* rooms);
+//void initializeItems(vector<Item*>* items);
+void printRooms(vector<Room*>* rooms, vector<Item*>* items, int currentRoom);
+//void printInventory(vector<Item*>* items, vector<int> inventory);
+//void getItem(vector<Room*>* rooms, vector<Item*>* items, vector<int>* inventory, int currentRoom, char name[]);
+//void dropItem(vector<Room*>* rooms, vector<Item*>* items, vector<int>* inventory, int currentRoom, char name[]);
+int move(vector<Room*>* rooms, int currentRoom, char direction[]);
 
 int main() {
   bool playing = true;
   char commandInput[10];
+  vector<Room*> roomsList;
+  vector<Item*> itemsList;
+  vector<int> Inventory;
+  initializeRooms(&roomsList);
+  //initializeItems(&itemsList);
+  int currentRoom = 1;
   
   cout << "Welcome to Zuul" << endl;
   cout << "In this version, you are urgently needed at your computer for a meeting." << endl;
@@ -22,9 +39,21 @@ int main() {
 
   while (playing == true) {
     cout << "You are currently in the ";
+    printRoom(&roomsList, &itemsList, currentRoom);
     cin >> commandInput;
+    cin.clear();
+    cin.ignore(10000, '\n');
     if (strcmp(commandInput, "Go") == 0 || strcmp(commandInput, "go") == 0) {
-      //placeholder
+      cout << "Direction: ";
+      cin >> commandInput;
+      cin.clear();
+      cin.ignore(10000, '\n');
+      if (move(&roomsList, currentRoom, commandInput) == 0) {
+	cout << endl << "There is no room there, nowhere to move... unless you can fly through walls." << endl;
+      }
+      else {
+	currentRoom = move(&roomsList, currentRoom, commandInput);
+      }
     }
     else if (strcmp(commandInput, "Get") == 0 || strcmp(commandInput, "get") == 0) {
       //placeholder
@@ -50,3 +79,26 @@ int main() {
   }
 }
 
+int move(vector<Room*>* rooms, int currentRoom, char direction[]) {
+  vector<Room*>*::iterator move;
+  for (move = rooms->begin(); move != rooms->end(); move++) {
+    if (currentRoom == (*move)->getID()) {
+      map<int, char*>::const_iterator map;
+      for (map = exits.begin(); map != exits.end(); ++map) {
+	if (strcmp(m -> second, direction) == 0) {
+	  return map -> first;
+	}
+      }
+    }
+  }
+  return 0;
+}
+
+void initializeRooms(vector<Room*>* rooms) {
+  char* north = (char*)("north");
+  char* east = (char*)("east");
+  char* south = (char*)("south");
+  char* west = (char*)("west");
+  map<int, char*> tempMap;
+  
+}
