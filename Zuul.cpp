@@ -41,7 +41,7 @@ int main() {
     }
     else if (strcmp(commandInput, "Help") == 0 || strcmp(commandInput, "help") == 0) {
       cout << "The available commands are: go, get, drop, inventory, quit, and help." << endl;
-      cout << "Map: " << endl; //placeholder for link to map
+      cout << "Map: https://docs.google.com/drawings/d/1l9XT2UThx76KT7BSAz0aefrQ25VEDIuZUnuKlFQQdGE/edit?usp=sharing" << endl;
     }
     else {
       cout << "Invalid command, try again" << endl;
