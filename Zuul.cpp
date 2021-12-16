@@ -49,7 +49,7 @@ int main() {
       cin.clear();
       cin.ignore(10000, '\n');
       if (move(&roomsList, currentRoom, commandInput) == 0) {
-	cout << endl << "There is no room there, nowhere to move... unless you can fly through walls." << endl;
+	cout << endl << "There is no room there, nowhere to move to... unless you can travel through walls." << endl;
       }
       else {
 	currentRoom = move(&roomsList, currentRoom, commandInput);
@@ -100,5 +100,79 @@ void initializeRooms(vector<Room*>* rooms) {
   char* south = (char*)("south");
   char* west = (char*)("west");
   map<int, char*> tempMap;
-  
+  Room* entranceHall = new Room();
+  entranceHall -> setDescription((char*)("in the entrance hallway."));
+  entrancaHall -> setID(1);
+  temp.insert(pair<int, char*> (3, north)); //To dining 1 on map
+  temp.insert(pair<int, char*> (2, east)); //To office 1 on map, any comments moving forward relating to "temp.insert(...)" will be refering to locations on the provided map
+  entranceHall -> setExit(temp);
+  entranceHall -> setItem(0);
+  rooms -> push_back(entranceHall);
+  temp.clear();
+  Room* firstOffice = new Room();
+  firstOffice -> setDescription((char*)("in the first office."));
+  firstOffice -> setID(2);
+  temp.insert(pair<int, char*> (1, west)); //To entrance
+  firstOffice -> setExit(temp);
+  firstOffice -> setItem(1); //Item: Keyboard
+  rooms -> push_back(firstOffice);
+  temp.clear();
+  Room* firstDining = new Room();
+  firstDining -> setDescription((char*)("in the front dining room, it's pretty empty here..."));
+  firstDining -> setID(3);
+  temp.insert(pair<int, char*> (1, south)); //To entrance
+  temp.insert(pair<int, char*> (4, north)); //To living room 1
+  firstDining -> setExit(temp);
+  firstDining -> setItem(0);
+  rooms -> push_back(firstDining);
+  temp.clear();
+  Room* firstLivingR = new Room();
+  firstLivingR -> setDescription((char*)("in the main living room, oooooh fireplace."));
+  firstLivingR -> setID(4);
+  temp.insert(pair<int, char*> (3, south)); //To dining 1
+  temp.insert(pair<int, char*> (6, west)); //To kitchen
+  firstLivingR -> setExit(temp);
+  firstLivingR -> setItem(0);
+  rooms -> push_back(firstLivingR);
+  temp.clear();
+  Room* secDining = new Room();
+  secDining -> setDescription((char*)("in the second dining area next to the kitchen. There's a table here, maybe that means something?"));
+  secDining -> setID(5);
+  temp.insert(pair<int, char*> (6, south)); //To kitchen
+  temp.insert(pair<int, char*> (9, east)); //To balconey
+  secDining -> setExit(temp);
+  secDining -> setItem(0);
+  rooms -> push_back(secDining);
+  temp.clear();
+  Room* kitchen = new Room();
+  kitchen -> setDescription((char*)("in the kitchen, is there anything useful in here?"));
+  kitchen -> setID(6);
+  temp.insert(pair<int, char*> (5, north)); //To dining 2
+  temp.insert(pair<int, char*> (4, east)); //To living room 1
+  temp.insert(pair<int, char*> (7, west)); //To office 2
+  temp.insert(pair<int, char*> (11, south)); //To living room 2/basement floor
+  kitchen -> setExit(temp);
+  kitchen -> setItem(0);
+  rooms -> push_back(kitchen);
+  temp.clear();
+  Room* secOffice = new Room();
+  secOffice -> setDescription((char*)("in the second office. MICE!!!!!!"));
+  secOffice -> setID(7);
+  temp.insert(pair<int, char*> (6, east)); //To kitchen
+  temp.insert(pair<int, char*> (8, south)); //To bathroom (8)
+  secOffice -> setExit(temp);
+  secOffice -> setItem(2); //Item: Mouse
+  rooms -> push_back(secOffice);
+  temp.clear();
+  Room* firstBathroom = new Room();
+  firstBathroom -> setDescription((char*)("in the first bathroom, I shouldn't spend much time here."));
+  firstBathroom -> setID(8);
+  temp.insert(pair<int, char*> (7, north)); //To office 2
+  temp.insert(pair<int, char*> (11, east)); //To living room 2/basement floor
+  temp.insert(pair<int, char*> (10, south)); //To garage
+  firstBathroom -> setExit(temp);
+  firstBathroom -> setItem(0);
+  rooms -> push_back(firstBathroom);
+  temp.clear();
+  //asdfajslfkjasdlfjs
 }
