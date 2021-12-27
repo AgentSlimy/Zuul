@@ -31,7 +31,7 @@ int main() {
     vector<Item*> itemsList;
     vector<int> Inventory;
     initializeRooms(&roomsList);
-    //initializeItems(&itemsList);
+    initializeItems(&itemsList);
     int currentRoom = 1;
 
     cout << "Welcome to Zuul" << endl;
@@ -240,4 +240,61 @@ void initializeRooms(vector<Room*>* rooms) {
     closet->setItem(6); //Item: Mousepad
     rooms->push_back(closet);
     tempMap.clear();
+}
+
+void initializeItems(vector<Item*>* items) {
+    Item* kb = new Item();
+    kb->setName((char*)("Keyboard"));
+    kb->setID(1);
+    items->push_back(kb);
+    Item* wr = new Item();
+    wr->setName((char*)("Wireless Recievers"));
+    wr->setID(2);
+    items->push_back(wr);
+    Item* m = new Item();
+    m->setName((char*)("Mouse"));
+    m->setID(3);
+    items->push_back(m);
+    Item* wc = new Item();
+    wc->setName((char*)("Webcam"));
+    wc->setID(4);
+    items->push_back(wc);
+    Item* hp = new Item();
+    hp->setName((char*)("Headphones"));
+    hp->setID(5);
+    items->push_back(hp);
+    Item* mp = new Item();
+    mp->setName((char*)("Mousepad"));
+    mp->setID(6);
+    items->push_back(mp);
+}
+
+void printRooms(vector<Room*>* rooms, vector<Item*>* items, int currentRoom) {
+    vector<Room*>::iterator room;
+    vector<Item*>::iterator item;
+    for (room = rooms->begin(); room != rooms->end(); room++) {
+        if (currentRoom == (*room)->getID()) {
+            cout << (*room)->getDescrip() << endl;
+            cout << " Exits: ";
+            for (map<int, char*>::const_iterator r = (*room)->getExits()->begin(); r != (*room)->getExits()->end(); r++) {
+                cout << r->second << " ";
+            }
+            cout << endl;
+
+            cout << " Items in this room: ";
+            int itemCount = 0;
+            for (item = items->begin(); item != items->end(); item++) {
+                if ((*room)->getItem() == (*item)->getID()) {
+                    cout << (*item)->getName();
+                    itemCount++;
+                }
+            }
+            if (itemCount == 0) {
+                cout << "No items in this room." << endl;
+            }
+            else {
+                cout << endl;
+            }
+        }
+    }
 }
