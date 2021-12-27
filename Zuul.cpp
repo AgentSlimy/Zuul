@@ -1,8 +1,7 @@
 /*
 Author: Nathan Zou
 Date: 12/26/21
-My version of a Zuul game with classes, pointers, and vectors.
-Help from Stephan Ene and Jayden Huang
+My version of a Zuul game with
 Map: https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-template-library-stl/
      https://www.cplusplus.com/reference/map/map/map/
 */
@@ -119,22 +118,22 @@ int main() {
             if (currentRoom == 2 && inventory[a] == 2) {
                 cout << endl << "Insufficient items." << endl;
                 cout << "You lost. :(" << endl << endl;
-                return 0;
+                playing = false;
             }
             else if (currentRoom == 2 && inventory[a] == 3) { 
                 cout << endl << "Insufficient items." << endl;
                 cout << "You lost. :(" << endl << endl;
-                return 0;
+                playing = false;
             }
             else if (currentRoom == 2 && inventory[a] == 4) {
                 cout << endl << "Insufficient items." << endl;
                 cout << "You lost. :(" << endl << endl;
-                return 0;
+                playing = false;
             }
             else if (inventory[a] == 6 && currentRoom == 2) {
                 cout << endl << "Too many items." << endl;
                 cout << "You lost. :(" << endl << endl;
-                return 0;
+                playing = false;
             }
         }
         
