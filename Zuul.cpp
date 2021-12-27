@@ -1,5 +1,8 @@
 /*
 Author: Nathan Zou
+Date: 12/26/21
+My version of a Zuul game with classes, pointers, and vectors.
+Help from Stephan Ene and Jayden Huang
 Map: https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-template-library-stl/
      https://www.cplusplus.com/reference/map/map/map/
 */
@@ -212,7 +215,6 @@ void initializeRooms(vector<Room*>* rooms) {
     tempMap.insert(pair<int, char*>(5, north)); //To dining 2
     tempMap.insert(pair<int, char*>(4, east)); //To living room 1
     tempMap.insert(pair<int, char*>(7, west)); //To office 2
-    tempMap.insert(pair<int, char*>(11, south)); //To living room 2/basement floor
     kitchen->setExit(tempMap);
     kitchen->setItem(0);
     rooms->push_back(kitchen);
@@ -230,7 +232,7 @@ void initializeRooms(vector<Room*>* rooms) {
     firstBathroom->setDescription((char*)("in the first bathroom, I shouldn't spend much time here."));
     firstBathroom->setID(8);
     tempMap.insert(pair<int, char*>(7, north)); //To office 2
-    tempMap.insert(pair<int, char*>(11, east)); //To living room 2/basement floor
+    tempMap.insert(pair<int, char*>(11, west)); //To living room 2/basement floor
     tempMap.insert(pair<int, char*>(10, south)); //To garage
     firstBathroom->setExit(tempMap);
     firstBathroom->setItem(0);
@@ -255,11 +257,11 @@ void initializeRooms(vector<Room*>* rooms) {
     Room* secLivingR = new Room();
     secLivingR->setDescription((char*)("downstairs in the second living room. My headphones!"));
     secLivingR->setID(11);
-    tempMap.insert(pair<int, char*>(8, south)); //To bathroom (8)
+    tempMap.insert(pair<int, char*>(8, east)); //To bathroom (8)
     tempMap.insert(pair<int, char*>(12, west)); //To hallway
     secLivingR->setExit(tempMap);
     secLivingR->setItem(5); //Item: Headphones
-    rooms->push_back(garage);
+    rooms->push_back(secLivingR);
     tempMap.clear();
     Room* hallway = new Room();
     hallway->setDescription((char*)("in the basement hallway. So many paths to choose from."));
