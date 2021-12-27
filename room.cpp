@@ -9,19 +9,34 @@ Room::Room() {
 
 }
 
-char* Room::getDescrip(){
-  return description;
+char* Room::getDescrip() {
+	return description;
 }
 
 map<int, char*>* Room::getExits() {
-  return &exits;
+	return &exits;
 }
 
 int Room::getID() {
-  return ID;
+	return ID;
 }
 
 int Room::getItem() {
-  return item;
+	return item;
 }
 
+void Room::setDescription(char* newDescription) {
+	description = newDescription;
+}
+
+void Room::setExit(map<int, char*> newExit) {
+	exits = newExit;
+}
+
+void Room::setID(int newID) {
+	ID = newID;
+}
+
+void Room::setItem(int newItem) {
+	item = newItem;
+}
