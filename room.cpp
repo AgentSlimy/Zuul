@@ -9,6 +9,7 @@ Room::Room() {
 
 }
 
+//Getters
 char* Room::getDescrip() {
 	return description;
 }
@@ -25,6 +26,7 @@ int Room::getItem() {
 	return item;
 }
 
+//Setters
 void Room::setDescription(char* newDescription) {
 	description = newDescription;
 }
