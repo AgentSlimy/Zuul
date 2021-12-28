@@ -17,7 +17,7 @@ int Item::getID() {
   return ID;
 }
 
-//Setters
+//Setters 
 void Item::setName(char* newName) {
   name = newName;
 }
