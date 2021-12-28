@@ -13,7 +13,7 @@ class Item {
   void setName(char*);
   void setID(int);
  //Getters
-  char* getName();
+  char* getName(); 
   int getID();
  private:
   char* name;
