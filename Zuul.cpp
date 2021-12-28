@@ -1,7 +1,8 @@
 /*
 Author: Nathan Zou
 Date: 12/26/21
-My version of a Zuul game with
+My version of a Zuul game with classes, pointers, and vectors.
+Help from Stefan Ene and Jayden Huang
 Map: https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-template-library-stl/
      https://www.cplusplus.com/reference/map/map/map/
 */
@@ -18,18 +19,21 @@ Map: https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-tem
 
 using namespace std;
 
+//Initialize functions (for organization
 void initializeRooms(vector<Room*>* rooms);
 void initializeItems(vector<Item*>* items);
+//Functions
 void printRooms(vector<Room*>* rooms, vector<Item*>* items, int currentRoom);
 void printInventory(vector<Item*>* items, vector<int> inventory);
 void getItem(vector<Room*>* rooms, vector<Item*>* items, vector<int>* inventory, int currentRoom, char name[]);
 void dropItem(vector<Room*>* rooms, vector<Item*>* items, vector<int>* inventory, int currentRoom, char name[]);
+//Move function, this returns an int of the room that the player is going to or a 0 if there is no room there
 int move(vector<Room*>* rooms, int currentRoom, char direction[]);
 
 int main() {
     bool playing = true;
-    char commandInput[10];
-    char inputResponse[10];
+    char commandInput[10]; //String for the inputs of commands
+    char inputResponse[10]; //String for the inputs of response to prompts from the commands
     vector<Room*> roomsList;
     vector<Item*> itemsList;
     vector<int> inventory;
@@ -49,7 +53,7 @@ int main() {
         cin >> commandInput;
         cin.clear();
         cin.ignore(10000, '\n');
-        if (strcmp(commandInput, "Go") == 0 || strcmp(commandInput, "go") == 0) {
+        if (strcmp(commandInput, "Go") == 0 || strcmp(commandInput, "go") == 0) { //Go command
             cout << "Direction: ";
             cin >> commandInput;
             cin.clear();
@@ -61,21 +65,21 @@ int main() {
                 currentRoom = move(&roomsList, currentRoom, commandInput);
             }
         }
-        else if (strcmp(commandInput, "Get") == 0 || strcmp(commandInput, "get") == 0) {
+        else if (strcmp(commandInput, "Get") == 0 || strcmp(commandInput, "get") == 0) { //Get command
             cout << "What item would you like to retrieve: " << endl;
             cin >> inputResponse;
             cin.clear();
             cin.ignore(10000, '\n');
             getItem(&roomsList, &itemsList, &inventory, currentRoom, inputResponse);
         }
-        else if (strcmp(commandInput, "Drop") == 0 || strcmp(commandInput, "drop") == 0) {
+        else if (strcmp(commandInput, "Drop") == 0 || strcmp(commandInput, "drop") == 0) { //Drop command
             cout << "What item would you like to drop?" << endl;
             cin >> inputResponse;
             cin.clear();
             cin.ignore(10000, '\n');
             dropItem(&roomsList, &itemsList, &inventory, currentRoom, inputResponse);
         }
-        else if (strcmp(commandInput, "Inventory") == 0 || strcmp(commandInput, "inventory") == 0) {
+        else if (strcmp(commandInput, "Inventory") == 0 || strcmp(commandInput, "inventory") == 0) { //Inventory command
             if (inventory.size() != 0) {
                 cout << endl << "You have: ";
                 printInventory(&itemsList, inventory);
@@ -84,22 +88,23 @@ int main() {
                 cout << endl << "You have nothing in your inventory." << endl;
             }
         }
-        else if (strcmp(commandInput, "Quit") == 0 || strcmp(commandInput, "quit") == 0) {
+        else if (strcmp(commandInput, "Quit") == 0 || strcmp(commandInput, "quit") == 0) { //Quit command
             playing = false;
             cout << "Quitting Zuul.";
         }
-        else if (strcmp(commandInput, "Help") == 0 || strcmp(commandInput, "help") == 0) {
+        else if (strcmp(commandInput, "Help") == 0 || strcmp(commandInput, "help") == 0) { //Help command
             cout << "The available commands are: go, get, drop, inventory, quit, and help." << endl;
             cout << "You need to retrieve your items and go back to your computer before your meeting starts!" << endl;
             cout << "Map: https://docs.google.com/drawings/d/1l9XT2UThx76KT7BSAz0aefrQ25VEDIuZUnuKlFQQdGE/edit?usp=sharing" << endl;
             cout << "Some directions provided in the game may not perfectly align with the map. The map was created first and then the code." << endl;
         }
-        else {
+        else { //Error message
             cout << "Invalid command, try again" << endl;
             playing = true;
         }
 
-        for (int a = 0; a < inventory.size(); a++) {
+        //Win condition, must have the first 5 items in inventory and be in the first/front office to win
+        for (int a = 0; a < inventory.size(); a++) { 
             for (int b = 0; b < inventory.size(); b++) {
                 for (int c = 0; c < inventory.size(); c++) {
                     for (int d = 0; d < inventory.size(); d++) {
@@ -114,6 +119,7 @@ int main() {
             }
         }
 
+        //Lose conditions, if you are in the first/front office without the required 5 items/you have too many items
         for (int a = 0; a < inventory.size(); a++) {
             if (currentRoom == 2 && inventory[a] == 2) {
                 cout << endl << "Insufficient items." << endl;
@@ -141,15 +147,19 @@ int main() {
     return 0;
 }
 
+//Move function
 int move(vector<Room*>* rooms, int currentRoom, char direction[]) {
     vector<Room*>::iterator move;
     for (move = rooms->begin(); move != rooms->end(); move++) {
+        //Find current room
         if (currentRoom == (*move)->getID()) {
             map<int, char*> exits;
             exits = *(*move)->getExits();
+            //get exits (help from Jayden)
             map<int, char*>::const_iterator map;
             for (map = exits.begin(); map != exits.end(); ++map) {
                 if (strcmp(map->second, direction) == 0) {
+                    //Int move will be the room the player is going to
                     return map->first;
                 }
             }
@@ -158,12 +168,15 @@ int move(vector<Room*>* rooms, int currentRoom, char direction[]) {
     return 0;
 }
 
-void initializeRooms(vector<Room*>* rooms) {
+void initializeRooms(vector<Room*>* rooms) { //Template per room from Stefan
+    //Movement options
     char* north = (char*)("north");
     char* east = (char*)("east");
     char* south = (char*)("south");
     char* west = (char*)("west");
+    //Temporary map to pass in exits
     map<int, char*> tempMap;
+    //All of the rooms
     Room* entranceHall = new Room();
     entranceHall->setDescription((char*)("in the entrance hallway. What more could you ask for?"));
     entranceHall->setID(1);
@@ -298,6 +311,7 @@ void initializeRooms(vector<Room*>* rooms) {
     tempMap.clear();
 }
 
+//All of the items
 void initializeItems(vector<Item*>* items) {
     Item* kb = new Item();
     kb->setName((char*)("Keyboard"));
@@ -325,6 +339,7 @@ void initializeItems(vector<Item*>* items) {
     items->push_back(mp);
 }
 
+//Print room function
 void printRooms(vector<Room*>* rooms, vector<Item*>* items, int currentRoom) {
     vector<Room*>::iterator room;
     vector<Item*>::iterator item;
@@ -332,7 +347,9 @@ void printRooms(vector<Room*>* rooms, vector<Item*>* items, int currentRoom) {
         if (currentRoom == (*room)->getID()) {
             cout << (*room)->getDescrip() << endl;
             cout << " Exits: ";
+            //Exits, help from Jayden
             for (map<int, char*>::const_iterator r = (*room)->getExits()->begin(); r != (*room)->getExits()->end(); r++) {
+                //Prints exits
                 cout << r->second << " ";
             }
             cout << endl;
@@ -341,6 +358,7 @@ void printRooms(vector<Room*>* rooms, vector<Item*>* items, int currentRoom) {
             int itemCount = 0;
             for (item = items->begin(); item != items->end(); item++) {
                 if ((*room)->getItem() == (*item)->getID()) {
+                    //Prints specific item
                     cout << (*item)->getName();
                     itemCount++;
                 }
@@ -355,6 +373,7 @@ void printRooms(vector<Room*>* rooms, vector<Item*>* items, int currentRoom) {
     }
 }
 
+//Print inventory function
 void printInventory(vector<Item*>* items, vector<int> inventory) {
     vector<Item*>::iterator inven;
     for (inven = items->begin(); inven != items->end(); inven++) {
@@ -367,14 +386,18 @@ void printInventory(vector<Item*>* items, vector<int> inventory) {
     cout << endl;
 }
 
+//Get item function
 void getItem(vector<Room*>* rooms, vector<Item*>* items, vector<int>* inventory, int currentRoom, char name[]) {
     vector<Room*>::iterator room;
     vector<Item*>::iterator item;
     for (room = rooms->begin(); room != rooms->end(); room++) {
         if (currentRoom == (*room)->getID()) {
             for (item = items->begin(); item != items->end(); item++) {
+                //Looks for items in the room, help from Stefan
                 if (((*room)->getItem() == (*item)->getID()) && (strcmp((*item)->getName(), name) == 0)) {
+                    //Adds item to inventory
                     inventory->push_back((*item)->getID());
+                    //Sets room to have no item
                     (*room)->setItem(0);
                     cout << endl << "Picked up: " << (*item)->getName() << "." << endl;
                     return;
@@ -385,33 +408,40 @@ void getItem(vector<Room*>* rooms, vector<Item*>* items, vector<int>* inventory,
     cout << "That item is not here." << endl;
 }
 
+//Drop item function
 void dropItem(vector<Room*>* rooms, vector<Item*>* items, vector<int>* inventory, int currentRoom, char name[]) {
     int count{};
     vector<Room*>::iterator room;
     vector<Item*>::iterator item;
     vector<int>::iterator gI;
-    for (room = rooms->begin(); room != rooms->end(); room++) {
+    for (room = rooms->begin(); room != rooms->end(); room++) { //Goes through rooms
+        //If in cuurentRoom
         if (currentRoom == (*room)->getID()) {
+            //If no items in the room (limit to 1 item per room)
             if ((*room)->getItem() == 0) {
-                for (item = items->begin(); item != items->end(); item++) {
+                for (item = items->begin(); item != items->end(); item++) { //Goes through items
+                    //If the item exits
                     if (strcmp((*item)->getName(), name) == 0) {
-                        for (gI = inventory->begin(); gI != inventory->end(); gI++) {
+                        for (gI = inventory->begin(); gI != inventory->end(); gI++) { //Goes through inventory
+                            //If the item is in inventory
                             if ((*gI) == (*item)->getID()) {
                                 cout << endl << "Dropped " << (*item)->getName() << "." << endl;
+                                //Sets item in the current room
                                 (*room)->setItem((*item)->getID());
+                                //Removes the item from inventory
                                 gI = inventory->erase(gI);
                                 return;
                             }
                         }
                     }
                     else if (count == items->size() - 1) {
-                        cout << endl << "Item not in inventory." << endl;
+                        cout << endl << "Item not in inventory." << endl; //Item has not been picked up and set in inventory
                     }
                     count++;
                 }
             }
             else {
-                cout << endl << "There is an item in this room already." << endl;
+                cout << endl << "There is an item in this room already." << endl; //1 item limit per room
             }
         }
     }
