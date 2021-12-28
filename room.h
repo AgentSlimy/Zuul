@@ -10,10 +10,12 @@ using namespace std;
 class Room {
  public:
   Room();
+ //Getters
   char* getDescrip();
   int getID();
   int getItem();
   map<int, char*>* getExits();
+ //Setters
   void setDescription(char*);
   void setExit(map<int, char*>);
   void setID(int);
